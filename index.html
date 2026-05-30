@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convenios Internacionales sobre Ciberdelincuencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-navy: #03090F;
+    --midnight: #060D17;
+    --electric-blue: #0A84FF;
+    --cyber-cyan: #00D4FF;
+    --gold: #C9A84C;
+    --gold-light: #F0CC6E;
+    --africa-orange: #E8631A;
+    --un-blue: #009EDB;
+    --budapest-purple: #6B4FBB;
+    --white: #F0F4FF;
+    --text-muted: #8899AA;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep-navy);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--cyber-cyan);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.3s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,212,255,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.3s ease;
+    mix-blend-mode: screen;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(3,9,15,0.95), transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--cyber-cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--cyber-cyan); }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 2rem 4rem;
+  }
+
+  /* Animated Grid Background */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  /* Glowing Orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: orbFloat 12s ease-in-out infinite;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--budapest-purple); top: -100px; left: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: var(--un-blue); bottom: -100px; right: -100px; animation-delay: -4s; }
+  .orb-3 { width: 300px; height: 300px; background: var(--africa-orange); top: 40%; left: 50%; transform: translate(-50%,-50%); animation-delay: -8s; }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+  }
+
+  /* Scanning line */
+  .scan-line {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+    animation: scan 6s linear infinite;
+    opacity: 0.5;
+  }
+  @keyframes scan {
+    0% { top: 0%; } 100% { top: 100%; }
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cyber-cyan);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-tag::before, .hero-tag::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 50px;
+    background: var(--cyber-cyan);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title .accent { color: var(--cyber-cyan); }
+  .hero-title .line2 { display: block; font-style: italic; color: var(--gold); font-size: 0.65em; }
+
+  .hero-subtitle {
+    max-width: 600px;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,244,255,0.7);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-cta-group {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--cyber-cyan), var(--electric-blue));
+    color: var(--deep-navy);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0,212,255,0.3);
+  }
+
+  .btn-outline {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--glass-border);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 1s ease 1.5s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--cyber-cyan), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    background: var(--glass);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    border-right: 1px solid var(--glass-border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--cyber-cyan);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Section base */
+  section { padding: 8rem 4rem; position: relative; }
+  .section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cyber-cyan);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+
+  /* Convention Cards */
+  .conventions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 0 -4rem;
+  }
+
+  .convention-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: none;
+  }
+  .convention-card:hover .card-overlay { opacity: 1; }
+  .convention-card:hover .card-image { transform: scale(1.08); }
+  .convention-card:hover .card-content { transform: translateY(0); }
+  .convention-card:hover .card-excerpt { opacity: 1; max-height: 150px; }
+
+  .card-image {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(0.6) saturate(0.8);
+  }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .card-overlay-budapest { background: linear-gradient(to top, rgba(107,79,187,0.9), rgba(6,13,23,0.3)); }
+  .card-overlay-onu { background: linear-gradient(to top, rgba(0,158,219,0.9), rgba(6,13,23,0.3)); }
+  .card-overlay-malabo { background: linear-gradient(to top, rgba(232,99,26,0.9), rgba(6,13,23,0.3)); }
+
+  .card-base-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(3,9,15,0.9) 30%, transparent 70%);
+  }
+
+  .card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2.5rem;
+    transform: translateY(10px);
+    transition: transform 0.5s;
+  }
+
+  .card-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+  .badge-budapest { border-color: var(--budapest-purple); color: #B09AFF; }
+  .badge-onu { border-color: var(--un-blue); color: #7FD4F5; }
+  .badge-malabo { border-color: var(--africa-orange); color: #FFB07A; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .card-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  .card-excerpt {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.8);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s, max-height 0.5s;
+  }
+  .card-arrow {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyber-cyan);
+  }
+
+  /* Deep Dive Sections */
+  .deep-dive {
+    background: var(--midnight);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Budapest Section */
+  .budapest-section {
+    background: linear-gradient(135deg, #06001A 0%, #0A0320 50%, #060D17 100%);
+  }
+
+  .article-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .article-layout.reverse { direction: rtl; }
+  .article-layout.reverse > * { direction: ltr; }
+
+  .article-visual {
+    position: relative;
+  }
+  .article-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+    filter: brightness(0.8) saturate(0.9);
+  }
+  .image-caption {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--glass-border);
+  }
+  .image-accent {
+    position: absolute;
+    border: 1px solid;
+    width: 60%; height: 60%;
+    z-index: -1;
+  }
+  .accent-purple { border-color: var(--budapest-purple); top: -20px; right: -20px; }
+  .accent-blue { border-color: var(--un-blue); bottom: -20px; left: -20px; }
+  .accent-orange { border-color: var(--africa-orange); top: -20px; right: -20px; }
+
+  .article-content { padding: 2rem 0; }
+  .article-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .eyebrow-line { width: 40px; height: 1px; }
+
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-body {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: rgba(240,244,255,0.75);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .article-body strong { color: var(--white); font-weight: 600; }
+
+  /* Key Points */
+  .key-points {
+    border-left: 2px solid;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-point {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.8);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .key-point:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .key-point strong { display: block; margin-bottom: 0.25rem; }
+
+  /* Countries Carousel for Budapest */
+  .countries-ticker {
+    overflow: hidden;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    margin: 3rem 0;
+  }
+  .ticker-track {
+    display: flex; gap: 3rem;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .ticker-dot { color: var(--cyber-cyan); margin-right: 1rem; }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding: 2rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--glass-border), transparent);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  .timeline-item:nth-child(odd) .timeline-content { text-align: right; }
+  .timeline-item:nth-child(odd) .timeline-empty { order: 3; }
+  .timeline-item:nth-child(odd) .timeline-content { order: 1; }
+  .timeline-item:nth-child(even) .timeline-content { order: 3; text-align: left; }
+  .timeline-node {
+    order: 2;
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--midnight);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--cyber-cyan);
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+  }
+  .timeline-content { padding: 0 2rem; }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cyber-cyan);
+    margin-bottom: 0.5rem;
+  }
+  .timeline-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.7);
+  }
+
+  /* Info Boxes */
+  .info-box {
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    background: var(--glass);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    margin: 2rem 0;
+  }
+  .info-box-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .info-box-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(240,244,255,0.75);
+  }
+
+  /* Pillars Grid */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+  .pillar-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pillar-card:hover { transform: translateY(-5px); }
+  .pillar-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    opacity: 0.07;
+    position: absolute;
+    top: -10px; right: 10px;
+    line-height: 1;
+  }
+  .pillar-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .pillar-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.65);
+  }
+
+  /* Comparison Table */
+  .comparison-section {
+    background: var(--midnight);
+    padding: 8rem 4rem;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+  }
+  .comparison-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    text-align: left;
+  }
+  .comparison-table td {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: top;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.75);
+  }
+  .comparison-table tr:hover td { background: var(--glass); }
+  .th-budapest { color: #B09AFF; }
+  .th-onu { color: #7FD4F5; }
+  .th-malabo { color: #FFB07A; }
+  .td-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Map Section */
+  .map-section {
+    background: var(--deep-navy);
+    padding: 8rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Interactive Tabs */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 4rem;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1.2rem 2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn.active { color: var(--cyber-cyan); border-bottom-color: var(--cyber-cyan); }
+  .tab-btn:hover { color: var(--white); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeUp 0.4s ease; }
+
+  /* Articles of Law styling */
+  .law-articles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .law-article {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-left: 3px solid;
+    padding: 1.5rem;
+    transition: transform 0.3s;
+  }
+  .law-article:hover { transform: translateX(5px); }
+  .article-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .article-title-sm {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .article-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgba(240,244,255,0.65);
+  }
+
+  /* Pull Quote */
+  .pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-style: italic;
+    line-height: 1.4;
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    text-align: center;
+    color: rgba(240,244,255,0.9);
+    position: relative;
+    margin: 4rem 0;
+  }
+  .pull-quote::before {
+    content: '"';
+    position: absolute;
+    top: -0.5em; left: 2rem;
+    font-size: 8rem;
+    opacity: 0.07;
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+  .quote-attr {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    font-style: normal;
+    text-transform: uppercase;
+  }
+
+  /* Footer */
+  footer {
+    background: #010508;
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cyber-cyan);
+    margin-bottom: 1rem;
+  }
+  .footer-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .footer-col-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyber-cyan);
+    margin-bottom: 1rem;
+  }
+  .footer-link {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+  .footer-link:hover { color: var(--white); }
+  .footer-bottom {
+    text-align: center;
+    padding: 2rem 4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    background: #010508;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Scroll Reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* Counters */
+  .counter { font-variant-numeric: tabular-nums; }
+
+  /* Color Helpers */
+  .color-purple { color: #B09AFF; }
+  .color-blue { color: #7FD4F5; }
+  .color-orange { color: #FFB07A; }
+  .color-cyan { color: var(--cyber-cyan); }
+  .color-gold { color: var(--gold); }
+
+  /* Border colors */
+  .border-purple { border-color: var(--budapest-purple); }
+  .border-blue { border-color: var(--un-blue); }
+  .border-orange { border-color: var(--africa-orange); }
+
+  /* Responsiveness */
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    section { padding: 5rem 2rem; }
+    .conventions-grid { grid-template-columns: 1fr; margin: 0; }
+    .convention-card { aspect-ratio: 16/9; }
+    .article-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .article-layout.reverse { direction: ltr; }
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .law-articles { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; }
+    .footer-links { grid-template-columns: 1fr 1fr; }
+    .timeline::before { display: none; }
+    .timeline-item { grid-template-columns: 60px 1fr; }
+    .timeline-item:nth-child(odd) .timeline-content { text-align: left; order: 3; }
+    .timeline-item:nth-child(odd) .timeline-node { order: 1; }
+    .comparison-section { padding: 5rem 1rem; }
+    .comparison-table { font-size: 0.8rem; }
+    .comparison-table td, .comparison-table th { padding: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">// Ciberconvenios Internacionales</div>
+  <ul class="nav-links">
+    <li><a href="#budapest">Budapest</a></li>
+    <li><a href="#onu">ONU 2024</a></li>
+    <li><a href="#malabo">Malabo</a></li>
+    <li><a href="#comparativa">Comparativa</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="scan-line"></div>
+
+  <div style="position:relative; z-index:2;">
+    <div class="hero-tag">Marco Jurídico Internacional · Ciberseguridad</div>
+    <h1 class="hero-title">
+      <span class="accent">Derecho</span> Digital<br>
+      <span class="line2">Convenios que gobiernan el ciberespacio</span>
+    </h1>
+    <p class="hero-subtitle">
+      Un análisis comparativo de los tres instrumentos jurídicos fundamentales que dan forma a la arquitectura legal internacional frente a la ciberdelincuencia.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#explorar" class="btn-primary">Explorar Convenios</a>
+      <a href="#comparativa" class="btn-outline">Ver Comparativa</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span style="font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; color:var(--text-muted);">SCROLL</span>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-number counter" data-target="68">0</span>
+    <span class="stat-label">Países firmantes Budapest</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number counter" data-target="193">0</span>
+    <span class="stat-label">Estados miembros ONU</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number counter" data-target="55">0</span>
+    <span class="stat-label">Naciones Unión Africana</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number counter" data-target="23">0</span>
+    <span class="stat-label">Años de evolución jurídica</span>
+  </div>
+</div>
+
+<!-- CARDS OVERVIEW -->
+<section id="explorar" style="padding: 6rem 0; background: var(--midnight);">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Los Tres Pilares</div>
+    <h2 class="section-title">Instrumentos <em>Fundamentales</em></h2>
+  </div>
+  <div class="conventions-grid reveal">
+    <!-- Budapest Card -->
+    <div class="convention-card" onclick="scrollToSection('budapest')">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Budapest" class="card-image">
+      <div class="card-base-overlay"></div>
+      <div class="card-overlay card-overlay-budapest"></div>
+      <div class="card-content">
+        <span class="card-badge badge-budapest">Europa · 2001</span>
+        <h3 class="card-title">Convenio de Budapest</h3>
+        <p class="card-year">// Primer tratado internacional vinculante</p>
+        <p class="card-excerpt">El Convenio sobre Cibercriminalidad del Consejo de Europa, adoptado en Budapest el 23 de noviembre de 2001, representa el primer instrumento internacional jurídicamente vinculante en materia de delitos informáticos.</p>
+        <span class="card-arrow">→ Leer más</span>
+      </div>
+    </div>
+    <!-- ONU Card -->
+    <div class="convention-card" onclick="scrollToSection('onu')">
+      <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80" alt="ONU" class="card-image">
+      <div class="card-base-overlay"></div>
+      <div class="card-overlay card-overlay-onu"></div>
+      <div class="card-content">
+        <span class="card-badge badge-onu">Global · 2024</span>
+        <h3 class="card-title">Convención ONU 2024</h3>
+        <p class="card-year">// El instrumento global más reciente</p>
+        <p class="card-excerpt">La Convención de las Naciones Unidas contra la Ciberdelincuencia, adoptada en 2024, establece un marco universal de cooperación y prevención frente a los delitos cometidos en el entorno digital.</p>
+        <span class="card-arrow">→ Leer más</span>
+      </div>
+    </div>
+    <!-- Malabo Card -->
+    <div class="convention-card" onclick="scrollToSection('malabo')">
+      <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800&q=80" alt="África" class="card-image">
+      <div class="card-base-overlay"></div>
+      <div class="card-overlay card-overlay-malabo"></div>
+      <div class="card-content">
+        <span class="card-badge badge-malabo">África · 2014</span>
+        <h3 class="card-title">Convención de Malabo</h3>
+        <p class="card-year">// La respuesta africana al ciberdelito</p>
+        <p class="card-excerpt">La Convención de la Unión Africana sobre Ciberseguridad y Protección de Datos Personales, adoptada en Malabo en 2014, constituye el primer instrumento panafricano dedicado a la ciberseguridad.</p>
+        <span class="card-arrow">→ Leer más</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== BUDAPEST =================== -->
+<section id="budapest" class="budapest-section">
+  <div class="article-layout reveal">
+    <div class="article-visual">
+      <div class="image-accent accent-purple"></div>
+      <img src="https://images.unsplash.com/photo-1519400197429-404ae1745a86?w=900&q=80" alt="Budapest" class="article-image">
+      <p class="image-caption">Budapest, Hungría — Sede de la adopción del Convenio, 23 de noviembre de 2001</p>
+    </div>
+    <div class="article-content">
+      <div class="article-eyebrow color-purple">
+        <span class="eyebrow-line" style="background: var(--budapest-purple);"></span>
+        Consejo de Europa · 2001
+      </div>
+      <h2 class="article-title">Convenio sobre <em style="color:#B09AFF">Cibercriminalidad</em><br>de Budapest</h2>
+      <p class="article-body">
+        Adoptado en Budapest el <strong>23 de noviembre de 2001</strong> bajo el auspicio del Consejo de Europa, este convenio es el primer tratado internacional jurídicamente vinculante orientado a armonizar legislaciones nacionales, mejorar técnicas de investigación y aumentar la cooperación internacional en materia de ciberdelincuencia.
+      </p>
+      <p class="article-body">
+        Si bien es un instrumento del Consejo de Europa, está abierto a la adhesión de <strong>cualquier Estado del mundo</strong>, lo que le ha otorgado relevancia global. Cuenta con más de 68 países firmantes, incluyendo Estados Unidos, Japón, Australia y Canadá.
+      </p>
+
+      <div class="key-points border-purple" style="border-color: var(--budapest-purple);">
+        <div class="key-point">
+          <strong class="color-purple">Delitos contra la confidencialidad</strong>
+          Acceso ilícito, interceptación ilícita, interferencia de datos y sistemas, mal uso de dispositivos.
+        </div>
+        <div class="key-point">
+          <strong class="color-purple">Delitos informáticos</strong>
+          Falsificación informática y fraude informático regulados en los Artículos 7 y 8.
+        </div>
+        <div class="key-point">
+          <strong class="color-purple">Delitos de contenido</strong>
+          Pornografía infantil online y delitos relacionados con infracciones de propiedad intelectual.
+        </div>
+        <div class="key-point">
+          <strong class="color-purple">Cooperación internacional</strong>
+          Red 24/7, asistencia mutua y extradición entre los Estados parte.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Articles Grid -->
+  <div style="max-width: 1200px; margin: 5rem auto 0; padding: 0 2rem;">
+    <div class="section-header reveal" style="text-align:left; margin-bottom: 2rem;">
+      <div class="section-eyebrow color-purple">Estructura Normativa</div>
+      <h3 class="section-title" style="font-size:2rem;">Principales <em>artículos</em></h3>
+    </div>
+    <div class="law-articles reveal">
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 2</p>
+        <h4 class="article-title-sm color-purple">Acceso ilícito</h4>
+        <p class="article-desc">Acceso deliberado e ilegítimo a la totalidad o parte de un sistema informático.</p>
+      </div>
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 3</p>
+        <h4 class="article-title-sm color-purple">Interceptación ilícita</h4>
+        <p class="article-desc">Interceptación deliberada e ilegítima por medios técnicos de transmisiones no públicas de datos.</p>
+      </div>
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 5</p>
+        <h4 class="article-title-sm color-purple">Interferencia en sistemas</h4>
+        <p class="article-desc">Obstaculización grave, deliberada e ilegítima del funcionamiento de un sistema informático.</p>
+      </div>
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 7-8</p>
+        <h4 class="article-title-sm color-purple">Fraude y falsificación</h4>
+        <p class="article-desc">Falsificación informática y fraude informático que causen perjuicio patrimonial.</p>
+      </div>
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 9</p>
+        <h4 class="article-title-sm color-purple">Pornografía infantil</h4>
+        <p class="article-desc">Infracciones relativas a la pornografía infantil producida, distribuida o poseída a través de sistemas informáticos.</p>
+      </div>
+      <div class="law-article" style="border-left-color: var(--budapest-purple);">
+        <p class="article-num">Artículo 35</p>
+        <h4 class="article-title-sm color-purple">Red 24/7</h4>
+        <p class="article-desc">Red de puntos de contacto disponibles las 24 horas, los 7 días de la semana para asistencia inmediata.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Countries ticker -->
+  <div class="countries-ticker reveal">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Albania</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Armenia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Australia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Austria</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Bélgica</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Canadá</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Chile</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Colombia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Costa Rica</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Croacia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Chipre</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> República Checa</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Estonia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Finlandia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Francia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Alemania</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Georgia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Grecia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Japón</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Países Bajos</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Portugal</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> España</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Estados Unidos</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Reino Unido</span>
+      <!-- Repeat for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Albania</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Armenia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Australia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Austria</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Bélgica</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Canadá</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Chile</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Colombia</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Costa Rica</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Croacia</span>
+    </div>
+  </div>
+
+  <div class="pull-quote reveal">
+    "El Convenio de Budapest sigue siendo, más de dos décadas después de su adopción, la piedra angular del derecho penal internacional en materia de cibercriminalidad."
+    <span class="quote-attr">— Consejo de Europa, 2023</span>
+  </div>
+</section>
+
+<!-- =================== ONU 2024 =================== -->
+<section id="onu" style="background: linear-gradient(135deg, #00070F 0%, #001520 50%, #060D17 100%); padding: 8rem 4rem;">
+  <div class="article-layout reverse reveal">
+    <div class="article-visual">
+      <div class="image-accent accent-blue"></div>
+      <img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?w=900&q=80" alt="ONU" class="article-image">
+      <p class="image-caption">Sede de las Naciones Unidas, Nueva York — El foro universal de gobernanza cibernética</p>
+    </div>
+    <div class="article-content">
+      <div class="article-eyebrow color-blue">
+        <span class="eyebrow-line" style="background: var(--un-blue);"></span>
+        Naciones Unidas · 2024
+      </div>
+      <h2 class="article-title">Convención ONU contra la <em style="color:#7FD4F5">Ciberdelincuencia</em></h2>
+      <p class="article-body">
+        Tras años de negociaciones lideradas por el Comité Ad Hoc establecido por la Resolución 74/247 de la Asamblea General, la comunidad internacional adoptó en <strong>2024</strong> la primera Convención de las Naciones Unidas enteramente dedicada a la ciberdelincuencia.
+      </p>
+      <p class="article-body">
+        A diferencia del Convenio de Budapest —de alcance regional—, esta Convención tiene carácter <strong>genuinamente universal</strong>, reflejando las perspectivas de los 193 Estados miembros de la ONU y abordando tensiones fundamentales entre seguridad digital y derechos humanos.
+      </p>
+
+      <div class="info-box" style="border-color: var(--un-blue);">
+        <p class="info-box-title color-blue">⚡ Contexto histórico</p>
+        <p class="info-box-body">La resolución 74/247 de la Asamblea General (2019), impulsada por Rusia, estableció el Comité Ad Hoc que durante años negoció el texto final. El proceso evidenció profundas divisiones entre potencias occidentales y países en desarrollo sobre el equilibrio entre seguridad y libertades civiles.</p>
+      </div>
+
+      <div class="key-points border-blue" style="border-color: var(--un-blue);">
+        <div class="key-point">
+          <strong class="color-blue">Alcance universal</strong>
+          Abierta a todos los Estados Miembros de la ONU, sin restricciones geográficas ni culturales.
+        </div>
+        <div class="key-point">
+          <strong class="color-blue">Derechos humanos integrados</strong>
+          Incorpora salvaguardas explícitas sobre privacidad, libertad de expresión y debido proceso.
+        </div>
+        <div class="key-point">
+          <strong class="color-blue">Cooperación técnica</strong>
+          Mecanismos de asistencia técnica y capacitación para países en desarrollo.
+        </div>
+        <div class="key-point">
+          <strong class="color-blue">Perspectiva de género</strong>
+          Reconoce el impacto diferenciado de los ciberdelitos en mujeres y grupos vulnerables.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pillars -->
+  <div style="max-width: 1200px; margin: 5rem auto 0;">
+    <div class="section-header reveal" style="text-align:left; margin-bottom: 3rem;">
+      <div class="section-eyebrow color-blue">Estructura</div>
+      <h3 class="section-title" style="font-size:2rem;">Cuatro <em>pilares</em> fundamentales</h3>
+    </div>
+    <div class="pillars-grid reveal">
+      <div class="pillar-card" style="border-color: rgba(0,158,219,0.3);">
+        <span class="pillar-number color-blue">01</span>
+        <div class="pillar-icon">🌐</div>
+        <h4 class="pillar-title color-blue">Criminalización</h4>
+        <p class="pillar-desc">Tipificación mínima común de delitos informáticos en todos los Estados parte.</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(0,158,219,0.3);">
+        <span class="pillar-number color-blue">02</span>
+        <div class="pillar-icon">⚖️</div>
+        <h4 class="pillar-title color-blue">Proceso penal</h4>
+        <p class="pillar-desc">Poderes de investigación adaptados a entornos digitales con garantías procesales.</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(0,158,219,0.3);">
+        <span class="pillar-number color-blue">03</span>
+        <div class="pillar-icon">🤝</div>
+        <h4 class="pillar-title color-blue">Cooperación int'l</h4>
+        <p class="pillar-desc">Mecanismos ágiles de asistencia jurídica mutua y extradición entre todos los países.</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(0,158,219,0.3);">
+        <span class="pillar-number color-blue">04</span>
+        <div class="pillar-icon">🛡️</div>
+        <h4 class="pillar-title color-blue">Prevención</h4>
+        <p class="pillar-desc">Medidas proactivas, asistencia técnica y construcción de capacidades en países en desarrollo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline ONU -->
+  <div style="max-width: 900px; margin: 5rem auto 0;" class="reveal">
+    <div class="section-eyebrow color-blue" style="text-align:center; margin-bottom: 2rem;">Línea de tiempo</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-text">Resolución 74/247 establece el Comité Ad Hoc de la ONU para negociar la convención.</div>
+        </div>
+        <div class="timeline-node">▶</div>
+        <div class="timeline-empty"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-empty"></div>
+        <div class="timeline-node">▶</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2021–2023</div>
+          <div class="timeline-text">Seis sesiones de negociación con participación de 193 Estados Miembros.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-text">Adopción definitiva de la Convención por la Asamblea General de la ONU.</div>
+        </div>
+        <div class="timeline-node">★</div>
+        <div class="timeline-empty"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== MALABO =================== -->
+<section id="malabo" style="background: linear-gradient(135deg, #0F0500 0%, #1A0800 50%, #060D17 100%); padding: 8rem 4rem;">
+  <div class="article-layout reveal">
+    <div class="article-visual">
+      <div class="image-accent accent-orange"></div>
+      <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=80" alt="África" class="article-image">
+      <p class="image-caption">Malabo, Guinea Ecuatorial — Sede de adopción de la Convención de la Unión Africana, 27 de junio de 2014</p>
+    </div>
+    <div class="article-content">
+      <div class="article-eyebrow color-orange">
+        <span class="eyebrow-line" style="background: var(--africa-orange);"></span>
+        Unión Africana · 2014
+      </div>
+      <h2 class="article-title">Convención de <em style="color:#FFB07A">Malabo</em><br>Unión Africana</h2>
+      <p class="article-body">
+        Adoptada el <strong>27 de junio de 2014</strong> en Malabo, Guinea Ecuatorial, la Convención de la Unión Africana sobre Ciberseguridad y Protección de Datos Personales representa la primera respuesta panafricana a la ciberdelincuencia y constituye uno de los instrumentos regionales más comprehensivos del mundo.
+      </p>
+      <p class="article-body">
+        Su carácter distintivo reside en la integración de cuatro grandes áreas en un solo instrumento: <strong>transacciones electrónicas, protección de datos personales, promoción de la ciberseguridad y control de la ciberdelincuencia</strong>, reconociendo así las particularidades del contexto africano.
+      </p>
+
+      <div class="info-box" style="border-color: var(--africa-orange);">
+        <p class="info-box-title color-orange">📋 Estado de ratificación</p>
+        <p class="info-box-body">Para entrar en vigor, la Convención de Malabo requiere la ratificación de 15 Estados Miembros de la Unión Africana. A la fecha, ha sido firmada por varios países aunque las ratificaciones continúan progresando gradualmente, limitando su plena efectividad.</p>
+      </div>
+
+      <div class="key-points border-orange" style="border-color: var(--africa-orange);">
+        <div class="key-point">
+          <strong class="color-orange">Transacciones electrónicas</strong>
+          Marco jurídico para el comercio electrónico, contratos digitales y firmas electrónicas en el continente.
+        </div>
+        <div class="key-point">
+          <strong class="color-orange">Protección de datos personales</strong>
+          Derechos de los titulares de datos, autoridades nacionales de protección y flujos transfronterizos de datos.
+        </div>
+        <div class="key-point">
+          <strong class="color-orange">Ciberseguridad nacional</strong>
+          Obligación de establecer estrategias nacionales de ciberseguridad y organismos de respuesta.
+        </div>
+        <div class="key-point">
+          <strong class="color-orange">Ciberdelincuencia</strong>
+          Tipificación penal y mecanismos de cooperación para combatir el crimen digital en África.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Four Areas -->
+  <div style="max-width: 1200px; margin: 5rem auto 0;" class="reveal">
+    <div class="section-eyebrow color-orange" style="text-align:center; margin-bottom: 3rem;">Las Cuatro Dimensiones de Malabo</div>
+    <div class="pillars-grid">
+      <div class="pillar-card" style="border-color: rgba(232,99,26,0.3);">
+        <span class="pillar-number color-orange">I</span>
+        <div class="pillar-icon">💻</div>
+        <h4 class="pillar-title color-orange">Comercio electrónico</h4>
+        <p class="pillar-desc">Marco legal para transacciones digitales, contratos electrónicos y reconocimiento de firmas digitales.</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(232,99,26,0.3);">
+        <span class="pillar-number color-orange">II</span>
+        <div class="pillar-icon">🔒</div>
+        <h4 class="pillar-title color-orange">Datos personales</h4>
+        <p class="pillar-desc">Protección de la privacidad y datos personales de los ciudadanos africanos en el entorno digital.</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(232,99,26,0.3);">
+        <span class="pillar-number color-orange">III</span>
+        <div class="pillar-icon">🛡️</div>
+        <h4 class="pillar-title color-orange">Ciberseguridad</h4>
+        <p class="pillar-desc">Estrategias nacionales, infraestructuras críticas y equipos de respuesta a incidentes (CSIRTs).</p>
+      </div>
+      <div class="pillar-card" style="border-color: rgba(232,99,26,0.3);">
+        <span class="pillar-number color-orange">IV</span>
+        <div class="pillar-icon">⚖️</div>
+        <h4 class="pillar-title color-orange">Ciberdelincuencia</h4>
+        <p class="pillar-desc">Tipificación penal y mecanismos de cooperación para combatir el crimen digital en África.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote reveal" style="max-width: 900px; margin: 4rem auto 0;">
+    "La Convención de Malabo reconoce que África necesita un marco propio que refleje sus realidades jurídicas, económicas y socioculturales únicas en el abordaje de la ciberseguridad."
+    <span class="quote-attr">— Unión Africana, Comisión de Derecho y Justicia</span>
+  </div>
+</section>
+
+<!-- =================== COMPARATIVA =================== -->
+<section id="comparativa" class="comparison-section">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Análisis Comparativo</div>
+    <h2 class="section-title">Los tres convenios <em>cara a cara</em></h2>
+  </div>
+
+  <!-- Interactive Tabs -->
+  <div class="tabs-nav reveal">
+    <button class="tab-btn active" onclick="switchTab('tabla')">Tabla Comparativa</button>
+    <button class="tab-btn" onclick="switchTab('alcance')">Alcance Geográfico</button>
+    <button class="tab-btn" onclick="switchTab('similitudes')">Similitudes</button>
+    <button class="tab-btn" onclick="switchTab('diferencias')">Diferencias Clave</button>
+  </div>
+
+  <!-- Tab: Tabla -->
+  <div id="tab-tabla" class="tab-panel active reveal">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th class="td-label">Dimensión</th>
+          <th class="th-budapest">⬡ Budapest (2001)</th>
+          <th class="th-onu">◆ ONU 2024</th>
+          <th class="th-malabo">● Malabo (2014)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">Organismo promotor</td>
+          <td>Consejo de Europa</td>
+          <td>Naciones Unidas</td>
+          <td>Unión Africana</td>
+        </tr>
+        <tr>
+          <td class="td-label">Año de adopción</td>
+          <td>2001</td>
+          <td>2024</td>
+          <td>2014</td>
+        </tr>
+        <tr>
+          <td class="td-label">Alcance geográfico</td>
+          <td>Europa + apertura mundial</td>
+          <td>Universal (193 Estados)</td>
+          <td>Continente africano (55 Estados)</td>
+        </tr>
+        <tr>
+          <td class="td-label">Naturaleza jurídica</td>
+          <td>Tratado internacional vinculante</td>
+          <td>Convención vinculante</td>
+          <td>Convención regional vinculante</td>
+        </tr>
+        <tr>
+          <td class="td-label">Firmantes actuales</td>
+          <td>~68 países</td>
+          <td>Proceso de firma abierto</td>
+          <td>Varios países africanos</td>
+        </tr>
+        <tr>
+          <td class="td-label">Vigencia</td>
+          <td>En vigor</td>
+          <td>Pendiente de ratificaciones</td>
+          <td>Pendiente de 15 ratificaciones</td>
+        </tr>
+        <tr>
+          <td class="td-label">Protección de datos</td>
+          <td>No incluida explícitamente</td>
+          <td>Integrada con garantías DDHH</td>
+          <td>Pilar central del convenio</td>
+        </tr>
+        <tr>
+          <td class="td-label">Comercio electrónico</td>
+          <td>No incluido</td>
+          <td>No incluido directamente</td>
+          <td>Pilar central del convenio</td>
+        </tr>
+        <tr>
+          <td class="td-label">Cooperación 24/7</td>
+          <td>Sí — Red establecida</td>
+          <td>Sí — mecanismo propio</td>
+          <td>Sí — entre Estados africanos</td>
+        </tr>
+        <tr>
+          <td class="td-label">Perspectiva DDHH</td>
+          <td>Limitada</td>
+          <td>Fuertemente integrada</td>
+          <td>Moderadamente integrada</td>
+        </tr>
+        <tr>
+          <td class="td-label">Asistencia técnica</td>
+          <td>Sí — programas del CoE</td>
+          <td>Sí — mecanismo UNODC</td>
+          <td>Sí — cooperación africana</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tab: Alcance -->
+  <div id="tab-alcance" class="tab-panel">
+    <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem;">
+      <div class="info-box" style="border-color: var(--budapest-purple);">
+        <p class="info-box-title color-purple">⬡ Budapest — Alcance global abierto</p>
+        <p class="info-box-body">Aunque creado por el Consejo de Europa, cualquier Estado puede adherirse. Más de 68 países de todos los continentes lo han ratificado. Es el estándar de referencia mundial dominante en la práctica.</p>
+      </div>
+      <div class="info-box" style="border-color: var(--un-blue);">
+        <p class="info-box-title color-blue">◆ ONU 2024 — Universal genuino</p>
+        <p class="info-box-body">Negociado con la participación de 193 Estados. Busca superar la percepción de Budapest como instrumento "occidental". Especialmente diseñado para incluir perspectivas del Sur Global.</p>
+      </div>
+      <div class="info-box" style="border-color: var(--africa-orange);">
+        <p class="info-box-title color-orange">● Malabo — Regionalismo africano</p>
+        <p class="info-box-body">Exclusivo para los 55 miembros de la Unión Africana. Refleja las necesidades específicas del continente en desarrollo digital, economía digital emergente y soberanía de datos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Similitudes -->
+  <div id="tab-similitudes" class="tab-panel">
+    <div class="pillars-grid" style="grid-template-columns: repeat(3,1fr);">
+      <div class="pillar-card" style="border-color: var(--glass-border);">
+        <div class="pillar-icon">🤝</div>
+        <h4 class="pillar-title color-cyan">Cooperación internacional</h4>
+        <p class="pillar-desc">Los tres instrumentos establecen mecanismos de asistencia jurídica mutua y cooperación entre autoridades competentes para la investigación y persecución de delitos informáticos.</p>
+      </div>
+      <div class="pillar-card" style="border-color: var(--glass-border);">
+        <div class="pillar-icon">⚖️</div>
+        <h4 class="pillar-title color-cyan">Criminalización mínima</h4>
+        <p class="pillar-desc">Los tres exigen que los Estados partes tipifiquen como delito el acceso ilícito, la interferencia de sistemas, el fraude informático y otros delitos tecnológicos básicos.</p>
+      </div>
+      <div class="pillar-card" style="border-color: var(--glass-border);">
+        <div class="pillar-icon">🔍</div>
+        <h4 class="pillar-title color-cyan">Poderes de investigación</h4>
+        <p class="pillar-desc">Contemplan poderes procesales específicos adaptados a evidencia digital: conservación expedita de datos, interceptación y acceso transfronterizo a sistemas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Diferencias -->
+  <div id="tab-diferencias" class="tab-panel">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+      <div class="info-box" style="border-color: var(--glass-border);">
+        <p class="info-box-title color-gold">Origen e ideología</p>
+        <p class="info-box-body">Budapest nació de la visión occidental de la ciberseguridad. La Convención ONU integra perspectivas del Sur Global con mayor énfasis en soberanía estatal. Malabo prioriza el desarrollo digital africano.</p>
+      </div>
+      <div class="info-box" style="border-color: var(--glass-border);">
+        <p class="info-box-title color-gold">Derechos humanos</p>
+        <p class="info-box-body">La Convención ONU 2024 es la más robusta en salvaguardas de derechos humanos. Budapest tiene disposiciones limitadas. Malabo incluye protección de datos pero con menor énfasis en libertades civiles.</p>
+      </div>
+      <div class="info-box" style="border-color: var(--glass-border);">
+        <p class="info-box-title color-gold">Ámbito material</p>
+        <p class="info-box-body">Malabo es el más comprehensivo: cubre ciberdelincuencia, datos personales Y comercio electrónico en un solo instrumento. Budapest y ONU se limitan al ámbito penal.</p>
+      </div>
+      <div class="info-box" style="border-color: var(--glass-border);">
+        <p class="info-box-title color-gold">Madurez y vigencia</p>
+        <p class="info-box-body">Budapest lleva más de 20 años en vigor y cuenta con jurisprudencia consolidada. ONU 2024 y Malabo están aún en proceso de ratificación, limitando su implementación práctica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA / Closing -->
+<section style="background: var(--deep-navy); text-align: center; padding: 8rem 4rem; position: relative; overflow:hidden;">
+  <div class="orb" style="width:600px; height:600px; background: var(--cyber-cyan); top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.05; filter:blur(100px);"></div>
+  <div style="position:relative; z-index:1;" class="reveal">
+    <div class="section-eyebrow">Conclusión</div>
+    <h2 class="section-title" style="max-width:700px; margin: 1rem auto 2rem;">El futuro del <em>Derecho Internacional Cibernético</em></h2>
+    <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 1.15rem; line-height: 1.8; color: rgba(240,244,255,0.7);">
+      La coexistencia de Budapest, la Convención ONU 2024 y el Convenio de Malabo refleja la complejidad y riqueza del derecho internacional en su adaptación a los desafíos del siglo XXI. Cada instrumento aporta una perspectiva única e indispensable.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#budapest" class="btn-primary">Volver al inicio</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <div class="footer-brand">CyberLex</div>
+    <p class="footer-tagline">Análisis jurídico comparativo de los instrumentos internacionales de ciberdelincuencia. Documento de estudio académico.</p>
+  </div>
+  <div class="footer-links">
+    <div>
+      <div class="footer-col-title">Convenios</div>
+      <a href="#budapest" class="footer-link">Budapest 2001</a>
+      <a href="#onu" class="footer-link">ONU 2024</a>
+      <a href="#malabo" class="footer-link">Malabo 2014</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Análisis</div>
+      <a href="#comparativa" class="footer-link">Comparativa</a>
+      <a href="#comparativa" class="footer-link">Similitudes</a>
+      <a href="#comparativa" class="footer-link">Diferencias</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Fuentes</div>
+      <a href="#" class="footer-link">Consejo de Europa</a>
+      <a href="#" class="footer-link">UNODC</a>
+      <a href="#" class="footer-link">Unión Africana</a>
+    </div>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2024 — Convenios Internacionales sobre Ciberdelincuencia — Material académico · Budapest · ONU · Malabo
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX - 6 + 'px';
+    cursor.style.top = mouseY - 6 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX - 18) * 0.12;
+    ringY += (mouseY - ringY - 18) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .convention-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; ring.style.borderColor = 'rgba(0,212,255,0.8)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; ring.style.borderColor = 'rgba(0,212,255,0.5)'; });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counters
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = +e.target.dataset.target;
+        let current = 0;
+        const inc = target / 60;
+        const update = () => {
+          current += inc;
+          if (current < target) { e.target.textContent = Math.ceil(current); requestAnimationFrame(update); }
+          else e.target.textContent = target;
+        };
+        update();
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // Tabs
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Scroll to section
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Parallax orbs
+  document.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    document.querySelectorAll('.orb').forEach((orb, i) => {
+      orb.style.transform = `translateY(${scrolled * (0.05 + i * 0.03)}px)`;
+    });
+  });
+</script>
+</body>
+</html>
